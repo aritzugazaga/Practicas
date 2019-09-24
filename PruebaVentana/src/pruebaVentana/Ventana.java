@@ -10,8 +10,8 @@ public class Ventana extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	public Ventana() {
-		setTitle("Mi primera ventana");
-		setSize(320,240);
+		setTitle("Ventana 2");
+		setSize(640,480);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
