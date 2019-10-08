@@ -1,8 +1,9 @@
+package testPersona;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import jUnit.Persona;
+import persona.Persona;
 
 public class PersonaTest {
 

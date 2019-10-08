@@ -1,4 +1,4 @@
-package jUnit;
+package persona;
 
 public class Persona {
 	String nombre;
