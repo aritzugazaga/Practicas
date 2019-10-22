@@ -15,7 +15,15 @@ public class Ejemplo {
 			//statement creado
 			
 			// consultar datos
-			stmt.executeQuery("SELECT nombre, apellido FROM usuario");
+			ResultSet rs = stmt.executeQuery("SELECT nombre, apellido FROM usuario");
+			
+			while (rs.next()) {
+				String nombre = rs.getString("nombre");
+				String apellido = rs.getString("apellido");
+				
+				System.out.println(nombre);
+				System.out.println(apellido);
+			}
 			
 			//ya no queremos usarlos mas
 			stmt.close();
