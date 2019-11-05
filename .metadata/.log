@@ -31,3 +31,8 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:385)
 	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:213)
 	... 9 more
+
+!ENTRY org.eclipse.core.resources 2 2 2019-11-05 19:08:00.566
+!MESSAGE Save operation warnings.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2019-11-05 19:08:00.566
+!MESSAGE The project description file (.project) for 'ud-prog3-clase-2019' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
