@@ -8,7 +8,7 @@ public class Ejemplo {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:data/ejemplo.db");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:data/usuario.db");
 			
 			Statement stmt = conn.createStatement();
 			//conexión abierta
@@ -21,8 +21,7 @@ public class Ejemplo {
 				String nombre = rs.getString("nombre");
 				String apellido = rs.getString("apellido");
 				
-				System.out.println(nombre);
-				System.out.println(apellido);
+				System.out.println("Nombre: " + nombre + "Apellido: " + apellido);
 			}
 			
 			//ya no queremos usarlos mas
