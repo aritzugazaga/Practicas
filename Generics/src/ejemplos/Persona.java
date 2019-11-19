@@ -43,16 +43,17 @@ public class Persona implements Comparable<Persona>{
 	}
 	
 	//Para ordenar Descendente por edad
-//	@Override
-//	public int compareTo(Persona p) {
-//		if (this.edad > p.edad)
-//			return -1;
-//					
-//		if (this.edad == p.edad)
-//			return 0;
-//		
-//		return 1;
-//	}
+/*	@Override
+	public int compareTo(Persona p) {
+		if (this.edad > p.edad)
+			return -1;
+					
+		if (this.edad == p.edad)
+			return 0;
+		
+		return 1;
+	}
+*/
 	
 	//Para ordenar Ascendente por apellido
 	@Override

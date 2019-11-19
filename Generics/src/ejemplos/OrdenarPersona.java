@@ -13,11 +13,19 @@ public class OrdenarPersona {
 		personas.add(new Persona("AAAA", "CCCC", 36));
 		personas.add(new Persona("BBBB", "DDDD", 17));
 		
+		System.out.println("Orden Original: ");
 		imprimirLista(personas);
 		
-		Collections.sort(personas);
+		//Collections.sort(personas);
 		
-		System.out.println("Despues de ordenar: ");
+		Collections.sort(personas, new ComparadorPersonaApellido());
+		
+		System.out.println("Despues de ordenar por Apellido: ");
+		imprimirLista(personas);
+		
+		Collections.sort(personas, new ComparadorPersonaEdad());
+		
+		System.out.println("Despues de ordenar por Edad: ");
 		imprimirLista(personas);
 	}
 public static void imprimirLista(List<Persona> personas) {
