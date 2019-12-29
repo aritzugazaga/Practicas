@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class FileDocument {
 	private File file = null;
@@ -32,7 +33,12 @@ public class FileDocument {
 				
 			}
 			
-			for
+			for (Entry<String, Integer> entry : wordMap.entrySet()) {
+				if (entry.getValue() >= minValue) {
+					wordCount.add(new WordCount(entry.getKey(), entry.getValue()));
+					
+				}
+			}
 			
 		} catch (IOException e){
 			throw new DocumentAnalysisException("Error reading data from file", e);
