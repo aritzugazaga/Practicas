@@ -19,6 +19,9 @@ public class FileDocument implements Document {
 	private int lines = 0;
 	
 	private List<WordCount> wordCount = new ArrayList<>();
+	
+	// Para poder hacer el test
+	private boolean analyzed = false;
 
 	public FileDocument(File file) {
 		this.file = file;
@@ -43,6 +46,9 @@ public class FileDocument implements Document {
 	public List<WordCount> getWordCount() {
 		return wordCount;
 	}
+	public boolean isAnalyzed() {
+		return analyzed;
+	}
 	
 	public void analyze(int minValue) throws DocumentAnalysisException{
 		Map<String, Integer> wordMap = new HashMap<>();
@@ -58,6 +64,8 @@ public class FileDocument implements Document {
 				words += countWords(line, wordMap);
 				
 			}
+			
+			analyzed = true;
 			
 			// Recorrer el mapa
 			for (Entry<String, Integer> entry : wordMap.entrySet()) {
