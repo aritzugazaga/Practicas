@@ -43,8 +43,21 @@ class FileDocumentTest {
 		assertEquals(3, analyzed.getLines());
 		assertEquals(6, analyzed.getWords());
 		
+		//En el que se analiza hay que probar el metodo wordCount ya que se utiliza
 		List<WordCount> wordCount = analyzed.getWordCount();
-		assertEquals(3, analyzed.size());
+		assertEquals(3, wordCount.size());
+		
+		assertEquals("linea", wordCount.get(0).getWord());
+		assertEquals(3, wordCount.get(0).getCount().intValue());
+		
+		assertEquals("otra", wordCount.get(1).getWord());
+		assertEquals(2, wordCount.get(1).getCount().intValue());
+		
+		assertEquals("primera", wordCount.get(2).getWord());
+		assertEquals(1, wordCount.get(2).getCount().intValue());
+		
+		//Metodo toString
+		assertEquals("name=test1.txt, path=test/data/test1.txt, chars=33, words=6, lines=3", analyzed.toString());
 	}
 
 }
