@@ -2,9 +2,13 @@ package examen.parc201811;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Consumer;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.*;
 
@@ -71,6 +75,7 @@ public class VentanaDatos extends JFrame {
 	// Click botón de guardado en Base de Datos
 	private void clickGuardaBD() {
 		// T3
+		
 	}
 	
 	// Click botón de búsqueda de mentora
@@ -170,11 +175,12 @@ public class VentanaDatos extends JFrame {
 						centro.getEstudPorSesion()[ numSesion-1 ] += numEstuds;  // Añade número de estudiantes en la sesión correspondiente
 					} else {
 						// T2
-						System.err.println( "Código de centro incorrecto en línea de seguimiento: " + mentoras.getFila( fila ) );
+						procesaErrorLinea( (l) -> System.err.println( "Código de centro incorrecto en línea de seguimiento: " + 1 ), 
+								mentoras.getFila( fila ) );
 					}
 				} catch (Exception e) {
 					// T2
-					System.err.println( "Error en línea de seguimiento: " + mentoras.getFila( fila ) );
+					procesaErrorLinea( (l) -> logger.log(Level.WARNING, "Error en línea de seguimiento: " + 1), mentoras.getFila( fila ) );
 				}
 			}
 			Tabla c = Tabla.createTablaFromColl( Datos.centros.values() );
@@ -183,9 +189,19 @@ public class VentanaDatos extends JFrame {
 	}
 	
 		// T2 - Inicialización de logger
+	private static Logger logger = Logger.getLogger("Seguimiento de sesiones.");
+		
+	static {
+		try {
+			logger.addHandler(new FileHandler("erroresSesiones.xml", true));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 		private static void procesaErrorLinea( Consumer<ArrayList<String>> proceso, ArrayList<String> linea ) {
 			// T2
+			proceso.accept(linea);
 		}
 	
 }
