@@ -1,13 +1,18 @@
 package academia;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Properties;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 public class ApiJava {
 
@@ -47,7 +52,28 @@ public class ApiJava {
 			logger.log(Level.SEVERE, "Error Escribir fichero", e);
 		}
 		
+		// Ejemplo properties
+		Properties properties = new Properties();
+		properties.setProperty("prueba", "prueba");
+		try {
+			properties.store(new FileOutputStream("properties.xml"), "propiedades");
+		} catch (IOException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		
+		// Leer/Cargar propiedades
+		try {
+			properties.load(new FileInputStream("properties.xml"));
+			String propiedadLeida = (String) properties.get("prueba");
+			System.out.println(propiedadLeida);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
