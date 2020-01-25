@@ -8,8 +8,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-/** Tabla de datos bidimensional de cualquier tipo para anÃ¡lisis posterior
- * ComposiciÃ³n: una serie de cabeceras (columnas) con una serie de filas de datos (objetos) que tienen un dato para cada columna
+/** Tabla de datos bidimensional de cualquier tipo para análisis posterior
+ * Composición: una serie de cabeceras (columnas) con una serie de filas de datos (objetos) que tienen un dato para cada columna
  * @author andoni.eguiluz @ ingenieria.deusto.es
  */
 public class Tabla {
@@ -24,16 +24,16 @@ public class Tabla {
 	private static SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy HH:mm:ss" );
 
 	// =================================================
-	// MÃ©todos
+	// Métodos
 
-	/** Crea una tabla de datos vacÃ­a (sin cabeceras ni datos)
+	/** Crea una tabla de datos vacía (sin cabeceras ni datos)
 	 */
 	public Tabla() {
 		headers = new ArrayList<>();
 		data = new ArrayList<>();
 	}
 	
-	/** Crea una tabla de datos vacÃ­a con cabeceras
+	/** Crea una tabla de datos vacía con cabeceras
 	 * @param headers	Nombres de las cabeceras de datos
 	 */
 	public Tabla( ArrayList<String> headers ) {
@@ -48,7 +48,7 @@ public class Tabla {
 		this.headers = headers;
 	}
 	
-	/** AÃ±ade una columna al final de las existentes
+	/** Añade una columna al final de las existentes
 	 * @param header	Nuevo nombre de cabecera para la columna
 	 * @param defaultValue	Valor por defecto para asignar a cada fila existente en esa nueva columna
 	 */
@@ -62,17 +62,17 @@ public class Tabla {
 		}
 	}
 	
-	/** AÃ±ade una lÃ­nea de datos al final de la tabla
+	/** Añade una línea de datos al final de la tabla
 	 * @param line	New data line
 	 */
 	public void addDataLine( ArrayList<String> line ) {
 		data.add( line );
 	}
 	
-	/** Chequea si una cabecera particular existe, y devuelve su nÃºmero de columna
+	/** Chequea si una cabecera particular existe, y devuelve su número de columna
 	 * @param header	Nombre de cabecera a encontrar
 	 * @param exact	true si el match debe ser exacto, false si vale con que sea parcial
-	 * @return	nÃºmero de la columna de primera cabecera que encaja con el nombre pedido, -1 si no existe ninguna
+	 * @return	número de la columna de primera cabecera que encaja con el nombre pedido, -1 si no existe ninguna
 	 */
 	public int getColumnWithHeader( String header, boolean exact ) {
 		String headerUp = header.toUpperCase();
@@ -86,23 +86,23 @@ public class Tabla {
 		return ret;
 	}
 	
-	/** Devuelve tamaÃ±o de la tabla (nÃºmero de filas de datos)
-	 * @return	NÃºmero de filas de datos, 0 si no hay ninguno
+	/** Devuelve tamaño de la tabla (número de filas de datos)
+	 * @return	Número de filas de datos, 0 si no hay ninguno
 	 */
 	public int size() {
 		return data.size();
 	}
 	
-	/**  Devuelve el nÃºmero de columnas de la tabla
-	 * @return	NÃºmero de columnas
+	/**  Devuelve el número de columnas de la tabla
+	 * @return	Número de columnas
 	 */
 	public int getWidth() {
 		return headers.size();
 	}
 	
 	/** Devuelve un valor de dato de la tabla
-	 * @param row	NÃºmero de fila
-	 * @param col	NÃºmero de columna
+	 * @param row	Número de fila
+	 * @param col	Número de columna
 	 * @return	Dato de ese valor
 	 */
 	public String get( int row, int col ) {
@@ -110,16 +110,16 @@ public class Tabla {
 	}
 	
 	/** Modifica un valor de dato de la tabla
-	 * @param row	NÃºmero de fila
-	 * @param col	NÃºmero de columna
-	 * @param value	Valor a modificar en esa posiciÃ³n
+	 * @param row	Número de fila
+	 * @param col	Número de columna
+	 * @param value	Valor a modificar en esa posición
 	 */
 	public void set( int row, int col, String value ) {
 		data.get( row ).set( col, value );
 	}
 	
 	/** Devuelve una fila completa de la tabla
-	 * @param row	NÃºmero de fila
+	 * @param row	Número de fila
 	 * @return	Lista de valores de esa fila
 	 */
 	public ArrayList<String> getFila( int row ) {
@@ -127,7 +127,7 @@ public class Tabla {
 	}
 	
 	/** Procesa tabla de datos con los datos ya existentes. Calcula los tipos de datos (inferidos de los valores)
-	 * @return	0 si el proceso es correcto, otro valor si se detecta algÃºn error (nÃºmero de lÃ­neas de datos errÃ³neas - no hay el mismo nÃºmero de datos que nÃºmero de cabeceras)
+	 * @return	0 si el proceso es correcto, otro valor si se detecta algún error (número de líneas de datos erróneas - no hay el mismo número de datos que número de cabeceras)
 	 */
 	public int calcTypes() {
 		// 1.- calcs errors
@@ -136,7 +136,7 @@ public class Tabla {
 		for (ArrayList<String> line : data) if (line.size()!=headers.size()) {
 			ok++;
 			if (LOG_CONSOLE_CSV) {
-				System.out.println( "Error en lÃ­nea " + lin + ": " + line.size() + " valores en vez de " + headers.size() );
+				System.out.println( "Error en línea " + lin + ": " + line.size() + " valores en vez de " + headers.size() );
 			}
 			lin++;
 		}
@@ -225,9 +225,9 @@ public class Tabla {
 	}
 	
 	// =================================================
-	// MÃ©todos estÃ¡ticos
+	// Métodos estáticos
 	
-	/** Crea una tabla partiendo de una colecciÃ³n de valores convertibles
+	/** Crea una tabla partiendo de una colección de valores convertibles
 	 * @param vals	Valores a convertir en tabla
 	 * @return	Tabla creada partiendo de esos valores
 	 */
@@ -254,8 +254,8 @@ public class Tabla {
 
 		private static boolean LOG_CONSOLE_CSV = false;  // Log en consola del csv
 		
-	// MÃ©todo de carga de tabla desde CSV
-	/** Procesa un fichero csv y lo carga devolviÃ©ndolo en una nueva tabla
+	// Método de carga de tabla desde CSV
+	/** Procesa un fichero csv y lo carga devolviéndolo en una nueva tabla
 	 * @param file	Fichero del csv
 	 * @return	Nuevo objeto tabla con los contenidos de ese csv
 	 * @throws IOException
@@ -267,7 +267,7 @@ public class Tabla {
 		return tabla;
 	}
 	
-	/** Procesa un fichero csv y lo carga devolviÃ©ndolo en una nueva tabla
+	/** Procesa un fichero csv y lo carga devolviéndolo en una nueva tabla
 	 * @param urlCompleta	URL del csv
 	 * @return	Nuevo objeto tabla con los contenidos de ese csv
 	 * @throws IOException
@@ -277,9 +277,9 @@ public class Tabla {
 	 */
 	public static Tabla processCSV( URL url ) 
 	throws MalformedURLException,  // URL incorrecta 
-	 IOException, // Error al abrir conexiÃ³n
+	 IOException, // Error al abrir conexión
 	 UnknownHostException, // servidor web no existente
-	 FileNotFoundException, // En algunos servidores, acceso a pï¿½gina inexistente
+	 FileNotFoundException, // En algunos servidores, acceso a p�gina inexistente
 	 ConnectException // Error de timeout
 	{
 		Tabla table = new Tabla();
@@ -289,7 +289,7 @@ public class Tabla {
 		    URLConnection connection = url.openConnection();
 		    connection.setDoInput(true);
 		    inStream = connection.getInputStream();
-		    input = new BufferedReader(new InputStreamReader( inStream, "UTF-8" ));  // Supone utf-8 en la codificaciÃ³n de texto
+		    input = new BufferedReader(new InputStreamReader( inStream, "UTF-8" ));  // Supone utf-8 en la codificación de texto
 		    String line = "";
 		    int numLine = 0;
 		    while ((line = input.readLine()) != null) {
@@ -317,20 +317,14 @@ public class Tabla {
 		}
 		table.calcTypes();
 		// T1
-		
-		for (int fila = table.size() -1; fila >= 0; fila--) { //Recorremos la tabla de abajo arriba de abajo arriba porque estamos borrando filas
-			if (table.getFila(fila).size()!=table.headers.size()) {
-				table.data.remove(fila);
-			}
-		}
 	    return table;
 	}
 	
-		/** Procesa una lÃ­nea de entrada de csv	
+		/** Procesa una línea de entrada de csv	
 		 * @param input	Stream de entrada ya abierto
-		 * @param line	La lÃ­nea YA LEÃ�DA desde input
-		 * @param numLine	NÃºmero de lÃ­nea ya leÃ­da
-		 * @return	Lista de strings procesados en el csv. Si hay algÃºn string sin acabar en la lÃ­nea actual, lee mÃ¡s lÃ­neas del input hasta que se acaben los strings o el input
+		 * @param line	La línea YA LEÍDA desde input
+		 * @param numLine	Número de línea ya leída
+		 * @return	Lista de strings procesados en el csv. Si hay algún string sin acabar en la línea actual, lee más líneas del input hasta que se acaben los strings o el input
 		 * @throws StringIndexOutOfBoundsException
 		 */
 		public static ArrayList<String> processCSVLine( BufferedReader input, String line, int numLine ) throws StringIndexOutOfBoundsException {
@@ -342,7 +336,7 @@ public class Tabla {
 			char separador = 0;
 			while (line!=null && (posCar<line.length() || line.isEmpty() && posCar==0)) {
 				if (line.isEmpty() && posCar==0) {
-					if (!inString) return ret;  // LÃ­nea vacÃ­a
+					if (!inString) return ret;  // Línea vacía
 				} else {
 					char car = line.charAt( posCar );
 					if (car=='"') {
@@ -357,7 +351,7 @@ public class Tabla {
 						} else {  // !inString
 							if (stringActual.isEmpty()) {  // " de apertura
 								inString = true;
-							} else {  // " despuÃ©s de valor - error
+							} else {  // " después de valor - error
 								throw new StringIndexOutOfBoundsException( "\" after data in char " + posCar + " of line [" + line + "]" );
 							}
 						}
@@ -365,36 +359,36 @@ public class Tabla {
 						if (inString) {  // separador dentro de string
 							stringActual += car;
 						} else {  // separador que separa valores
-							if (separador==0) { // Si no se habÃ­a encontrado separador hasta ahora
+							if (separador==0) { // Si no se había encontrado separador hasta ahora
 								separador = car;
 								ret.add( stringActual );
 								stringActual = "";
 								finString = false;
-							} else { // Si se habÃ­a encontrado, solo vale el mismo (, o ;)
+							} else { // Si se había encontrado, solo vale el mismo (, o ;)
 								if (separador==car) {  // Es un separador
 									ret.add( stringActual );
 									stringActual = "";
 									finString = false;
-								} else {  // Es un carÃ¡cter normal
-									if (finString) throw new StringIndexOutOfBoundsException( "Data after string in char " + posCar + " of line [" + line + "]");  // valor despuÃ©s de string - error
+								} else {  // Es un carácter normal
+									if (finString) throw new StringIndexOutOfBoundsException( "Data after string in char " + posCar + " of line [" + line + "]");  // valor después de string - error
 									stringActual += car;
 								}
 							}
 						}
-					} else {  // CarÃ¡cter dentro de valor
-						if (finString) throw new StringIndexOutOfBoundsException( "Data after string in char " + posCar + " of line [" + line + "]");  // valor despuÃ©s de string - error
+					} else {  // Carácter dentro de valor
+						if (finString) throw new StringIndexOutOfBoundsException( "Data after string in char " + posCar + " of line [" + line + "]");  // valor después de string - error
 						stringActual += car;
 					}
 					posCar++;
 				}
-				if (posCar>=line.length() && inString) {  // Se ha acabado la lÃ­nea sin acabarse el string. Eso es porque algÃºn string incluye salto de lÃ­nea. Se sigue con la siguiente lÃ­nea
+				if (posCar>=line.length() && inString) {  // Se ha acabado la línea sin acabarse el string. Eso es porque algún string incluye salto de línea. Se sigue con la siguiente línea
 					line = null;
 				    try {
 						line = input.readLine();
 				    	if (LOG_CONSOLE_CSV) System.out.println( "  " + numLine + " (add)\t" + line );
 						posCar = 0;
 						stringActual += "\n";
-					} catch (IOException e) {}  // Si la lÃ­nea es null es que el fichero se ha acabado ya o hay un error de I/O
+					} catch (IOException e) {}  // Si la línea es null es que el fichero se ha acabado ya o hay un error de I/O
 				}
 			}
 			if (inString) throw new StringIndexOutOfBoundsException( "String not closed in line " + numLine + ": [" + line + "]");
@@ -402,7 +396,7 @@ public class Tabla {
 			return ret;
 		}
 
-			// Devuelve el siguiente carÃ¡cter (car 0 si no existe el siguiente carÃ¡cter)
+			// Devuelve el siguiente carácter (car 0 si no existe el siguiente carácter)
 			private static char nextCar( String line, int posCar ) {
 				if (posCar+1<line.length()) return line.charAt( posCar + 1 );
 				else return Character.MIN_VALUE;
@@ -410,7 +404,7 @@ public class Tabla {
 
 	
 	// =================================================
-	// MÃ©todos relacionados con el modelo de tabla (cuando se quiere utilizar esta tabla en una JTable)
+	// Métodos relacionados con el modelo de tabla (cuando se quiere utilizar esta tabla en una JTable)
 	
 	private TablaTableModel miModelo = null;
 	/** Devuelve un modelo de tabla de este objeto tabla para poderse utilizar como modelo de datos en una JTable
@@ -438,7 +432,7 @@ public class Tabla {
 		}
 		@Override
 		public Class<?> getColumnClass(int columnIndex) {
-			return String.class; //  types.get(columnIndex);  si se quisiera tipos especÃ­ficos
+			return String.class; //  types.get(columnIndex);  si se quisiera tipos específicos
 		}
 		@Override
 		public boolean isCellEditable(int rowIndex, int columnIndex) { // Estas tablas de datos no son editables por defecto
