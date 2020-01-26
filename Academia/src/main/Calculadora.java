@@ -1,4 +1,4 @@
-package academia;
+package main;
 
 public class Calculadora {
 	

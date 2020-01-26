@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-01-26T10:35:40.691785Z</date>
+  <millis>1580034940691</millis>
+  <nanos>785000</nanos>
+  <sequence>0</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos database.db</message>
+</record>
+<record>
+  <date>2020-01-26T10:35:40.757226400Z</date>
+  <millis>1580034940757</millis>
+  <nanos>226400</nanos>
+  <sequence>1</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2020-01-26T10:35:40.786492600Z</date>
+  <millis>1580034940786</millis>
+  <nanos>492600</nanos>
+  <sequence>2</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>BD añadida 1 fila	insert into items (id, name, timeperunit) values(1, 'a', 1.0)</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-01-26T10:36:00.468603600Z</date>
+  <millis>1580034960468</millis>
+  <nanos>603600</nanos>
+  <sequence>0</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos database.db</message>
+</record>
+<record>
+  <date>2020-01-26T10:36:00.510587900Z</date>
+  <millis>1580034960510</millis>
+  <nanos>587900</nanos>
+  <sequence>1</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2020-01-26T10:36:00.530803900Z</date>
+  <millis>1580034960530</millis>
+  <nanos>803900</nanos>
+  <sequence>2</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>BD añadida 1 fila	insert into items (id, name, timeperunit) values(1, 'a', 1.0)</message>
+</record>
+<record>
+  <date>2020-01-26T10:36:00.535070Z</date>
+  <millis>1580034960535</millis>
+  <nanos>70000</nanos>
+  <sequence>3</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>SEVERE</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Error en BD	</message>
+  <exception>
+    <message>java.sql.SQLException: The prepared statement has been finalized</message>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>throwex</method>
+      <line>478</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>step</method>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>execute</method>
+      <line>842</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.CoreStatement</class>
+      <method>exec</method>
+      <line>80</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.jdbc3.JDBC3Statement</class>
+      <method>executeQuery</method>
+      <line>75</line>
+    </frame>
+    <frame>
+      <class>database.DBManager</class>
+      <method>loadItems</method>
+      <line>130</line>
+    </frame>
+    <frame>
+      <class>gui.MainWindow</class>
+      <method>main</method>
+      <line>218</line>
+    </frame>
+  </exception>
+</record>
+</log>

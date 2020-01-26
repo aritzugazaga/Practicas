@@ -4,6 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.List;
+import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -20,6 +30,9 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import database.DBManager;
+import orders.Item;
+import orders.MyOrder;
 import orders.Order;
 import orders.OrderSerializationException;
 
@@ -149,22 +162,97 @@ public class MainWindow extends JFrame {
 	}
 	
 	private void saveOrder(Order order, File file) throws OrderSerializationException {
-		// 
+		// Guarda fichero binario
+		try {
+			// Output se utiliza para escribir
+			FileOutputStream fos = new FileOutputStream(file);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(order);
+			// Cerrar en orden
+			oos.close();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// Lanzar la excepcion que pide el enunciado
+			throw new OrderSerializationException("Error en la serialización del objeto", e);
+		}
 	}
 	
+	@SuppressWarnings("resource")
 	private Order loadOrder(File file) throws OrderSerializationException {
-		throw new OrderSerializationException("Not implemented"); // quitar al implementar
+			// Input se utiliza para escribir
+			FileInputStream fis;
+			try {
+				fis = new FileInputStream(file);
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				Object object = ois.readObject();
+				// Cerrar en orden
+				ois.close();
+				fis.close();
+				return (Order) object;
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				// Lanzar la excepcion que pide el enunciado
+				throw new OrderSerializationException("Error en la serialización del objeto", e);
+			} catch (ClassNotFoundException e) {
+				// Lanzar la excepcion que pide el enunciado
+				throw new OrderSerializationException("Error en la serialización del objeto", e);
+			}
+			
+			return null;
+			
 	}
 
 	public static void main(String[] args) {
+		demoFicheros();
+		
+		Connection con = DBManager.initBD("database.db");
+		
+		Statement st = DBManager.usarCrearTablasBD(con);
+		boolean ok = DBManager.itemInsert(st, "a", 1, 1);
+		if(!ok) {
+			System.out.println("No se ha insertado item");
+		} else {
+			List<Item> items = DBManager.loadItems(st);
+			for(Item item: items) {
+				System.out.println(item);
+			}
+		}
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			
-			@Override
-			public void run() {
-				new MainWindow();
-			}
-		});
+				@Override
+				public void run() {
+					new MainWindow();
+				}
+			});
 
+	}
+
+	private static void demoFicheros() {
+		MainWindow window = new MainWindow();
+		MyOrder order = new MyOrder();
+		order.addItem(new Item(1, "a", (float) 1), 1);
+		
+		// Guardar orden en fichero
+		try {
+			window.saveOrder(order, new File("order.bin"));
+		} catch (OrderSerializationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// Leer orden del fichero
+		try {
+			Order orderLeida = window.loadOrder(new File("order.bin"));
+			System.out.println(orderLeida);
+		} catch (OrderSerializationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

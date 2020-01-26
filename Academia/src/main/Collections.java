@@ -1,28 +1,17 @@
-package orders;
+package main;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-public class MyOrder implements Order, Serializable {
 
-	  /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5655693553015814046L;
 
-	public static void main(String[] args) {
-	    MyOrder of = new MyOrder();
-	    Item a = new Item(1, "patatas", 1.0f);
-	    of.addItem(a, 10);
-	    of.removeItem(a, 5);
-	    System.out.println(a.getId() + ": " + of.getItem(a));
-	  }
-
-	  private HashMap<Item, Integer> mapaI;
+public class Collections {
+	// Para poder comprarar dos objetos entre ellos hay que en la clase que queremos comparar:
+	// Source --> Generate hashcode() and equals()
+	private HashMap<Item, Integer> mapaI;
 
 	  public MyOrder() {
 	    mapaI = new HashMap<>();
@@ -87,16 +76,4 @@ public class MyOrder implements Order, Serializable {
 
 	    return result;
 	  }
-	  
-	  @Override
-	public String toString() {
-		// Devuelve un String con toda la informacion de todos los items del mapa
-		String items = "";
-		for (Entry<Item, Integer> e : mapaI.entrySet()) {
-			// .concat para concatenar
-			items = items.concat("Item: " + e.getKey() + " Unidades: " + e.getValue());
-		}
-		return items;
-	}
-
-	}
+}

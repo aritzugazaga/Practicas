@@ -1,7 +1,13 @@
 package orders;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8898837163060002586L;
 	private Integer id;
 	private String name;
 	private Float timePerUnit;
@@ -26,7 +32,7 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return name;
+		return "Nombre: " + name + " Id: " + id + " Tiempo de fabricación: " + timePerUnit;
 	}
 	
 	// Source --> Generate hashcode() and equals()
