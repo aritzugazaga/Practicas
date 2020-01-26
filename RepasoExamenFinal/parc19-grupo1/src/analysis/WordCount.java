@@ -36,13 +36,14 @@ public class WordCount {
 		return count;
 	}
 	
-	//Para poder comparar objetos
-	public int compareTo(WordCount wordCount) {
-		return this.count.compareTo(wordCount.count);
-	}
-	
 	@Override
 	public String toString() {
 		return String.format("word=%s, count=%s", word, count);
 	}
+	
+	// Para ordenar de mayor a menor dos int
+	public int compareTo(WordCount wordCount)  {
+		return this.count.compareTo(wordCount.count);
+	}
+	
 }

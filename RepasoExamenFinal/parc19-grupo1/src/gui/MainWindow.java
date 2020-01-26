@@ -27,8 +27,6 @@ import javax.swing.event.ListSelectionListener;
 import analysis.AnalysisProgressCallback;
 import analysis.Document;
 import analysis.DocumentAnalyzer;
-import database.DBManager;
-import database.DBManagerException;
 import loader.DirectoryLoader;
 import loader.DirectoryLoaderException;
 
@@ -276,17 +274,7 @@ public class MainWindow extends JFrame implements AnalysisProgressCallback {
 		stopAnalysisItem.setEnabled(false);
 	}
 	
-	private void saveDocuments(List<Document> documents) { //Ejecuta lo creado en la clase DBManager
-		DBManager dbManager = new DBManager();
-		try {
-			dbManager.connect();
-			
-			dbManager.createDocumentTable();
-			dbManager.insertDocumentTable(documents);
-			
-			dbManager.disconnect();
-		} catch (DBManagerException e) {
-			e.printStackTrace();
-		}
+	private void saveDocuments(List<Document> documents) {
+		
 	}
 }
