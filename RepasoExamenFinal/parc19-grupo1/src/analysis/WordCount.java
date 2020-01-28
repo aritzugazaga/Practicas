@@ -5,7 +5,7 @@ package analysis;
  * @author Unai Aguilera <unai.aguilera@deusto.es>
  *
  */
-public class WordCount {
+public class WordCount implements Comparable<WordCount>{
 
 	private String word;
 	private Integer count;

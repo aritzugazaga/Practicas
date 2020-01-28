@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import analysis.Document;
-//import analysis.FileDocument;
+import analysis.FileDocument;
 
 /**
  * Cargador de los ficheros de texto de un directorio.
@@ -29,7 +29,7 @@ public class DirectoryLoader {
 		
 		for (File file : directory.listFiles()) {
 			if (file.getName().contains(".txt")) {
-//				documents.add(new FileDocument(file));
+				documents.add(new FileDocument(file));
 			}
 		}
 		

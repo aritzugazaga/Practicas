@@ -19,27 +19,15 @@ public class VentanaMiniExcel extends JFrame {
 	JScrollPane scrollPane; // JScrollPane para la JTable 
 	private static final long serialVersionUID = -5027485765293445079L;
 	JLabel verCelda;
-	private Logger logger = Logger.getLogger(VentanaMiniExcel.class.getName());
+	private static Logger logger;
 	
     /** Crea la ventana principal del MiniExcel
      * @param dat	Tabla de datos a mostrar y editar
      */
     @SuppressWarnings("serial")
 	public VentanaMiniExcel( TablaDatos dat ) {
+    	crearLog();
     	this.datos = dat;
-   
-		FileHandler fileHandler;
-		try {
-			fileHandler = new FileHandler("Info.log.xml");
-			logger.addHandler(fileHandler);
-		} catch (SecurityException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 
     	// Crear la tabla y el scrollpane
     	tabla = new JTableExcel( datos );
@@ -61,7 +49,7 @@ public class VentanaMiniExcel extends JFrame {
         botonera.add( bGuardar );
         JButton bCargar = new JButton( "Load" );
         botonera.add( bCargar );
-        JButton bGuardarBD = new JButton("GuardarBD");
+        JButton bGuardarBD = new JButton("Guardar BD");
         botonera.add(bGuardarBD);
         verCelda = new JLabel( " " );
         botonera.add( verCelda );
@@ -94,15 +82,18 @@ public class VentanaMiniExcel extends JFrame {
 				int col = tabla.getSelectedColumn();
 				if (fila>=0 && col>0) {  // Si la celda es editable
 					ValorCelda dato = datos.get( fila, col-1 );
-					if (dato == null) 
+					if (dato == null) {
 						verCelda.setText( " " );
-					else
+					}else {
 						verCelda.setText( dato.getTextoEdicion() );
+					}
+					logger.log(Level.INFO, "Fila numero " + fila + " y columna numero " + col + " se cambian"
+							+ " los siguientes datos: "+ dato);
+
 				}
+
 				
-				
-				logger.log(Level.INFO, "Fila: " + fila + "Columna: " + col + 
-						"Texto editado: " + datos.get(fila, col).getTextoEdicion());
+
 			}
 		};
         tabla.getSelectionModel().addListSelectionListener( escuchador );
@@ -118,9 +109,9 @@ public class VentanaMiniExcel extends JFrame {
 					datos.selCelda( ref, !datos.isCeldaSel( ref ) );  // Invierte la selección
 					tabla.repaint();
 					tabla.requestFocus();
-				}
 				
-				logger.log(Level.INFO, "Fila: " + fila + "Columna: " + col );
+					logger.log(Level.INFO, "Fila numero " + fila + " y columna numero " + col);
+				}
 			}
 		});
         bGuardar.addActionListener( new ActionListener() {
@@ -133,7 +124,7 @@ public class VentanaMiniExcel extends JFrame {
 				jFileChooser.showSaveDialog( VentanaMiniExcel.this );
 				File fSalida = jFileChooser.getSelectedFile();
 				if (fSalida!=null) datos.escribeAFichero( fSalida );
-				logger.log(Level.INFO, fSalida.getAbsolutePath() );
+				logger.log(Level.INFO, "Con direccion: " + fSalida.getAbsolutePath());
 			}
 		} );
         bCargar.addActionListener( new ActionListener() {
@@ -148,40 +139,58 @@ public class VentanaMiniExcel extends JFrame {
 					datos.leeDeFichero( fEntrada );
 					tabla.repaint();
 				}
-				logger.log(Level.INFO, fEntrada.getAbsolutePath() );
+				logger.log(Level.INFO, "Con direccion: " + fEntrada.getAbsolutePath());
 			}
 		} );
+        
         bGuardarBD.addActionListener(new ActionListener() {
-			
-			@Override
+
 			public void actionPerformed(ActionEvent arg0) {
-				//Guardar tabla excell en la BDD
-				// Recorrer objeto datos
+				//Guardar tabla excel en la BD
+				//Recorrer objeto datos
 				Connection conn = BD.initBD("celdas.bd");
 				Statement st = BD.usarCrearTablasBD(conn);
 				for (int fila = 0; fila < datos.getFilas(); fila++) {
-					for(int columna = 0; columna<datos.getColumnas(); columna++) {
+					for (int columna = 0; columna < datos.getColumnas(); columna++) {
 						ValorCelda celda = datos.get(fila, columna);
-						celda.getTextoEdicion();
-						// La celda tiene texto
-						if (celda != null && celda.getTextoEdicion() != null 
-								&& celda.getTextoEdicion().length()>0) {
-							// Si la celda existe en la BD hacemos update
+						//La celda tiene texto
+						if(celda!= null && celda.getTextoEdicion()!=null && celda.getTextoEdicion().length()>0) {
+							// Si la celda existe en BD hacemos un update
 							if (BD.selectCelda(st, fila, columna) != null) {
-								BD.celdaUpdate(st, fila, columna, celda.getTextoEdicion());
-							} else {
-								// Si la celda no existe en la BD hacemos insert
-								BD.celdaInsert(st, fila, columna, celda.getTextoEdicion());
+								BD.celdasInsert(st, fila, columna, celda.getTextoEdicion());
+							}else {
+								//Si la celda no existe en BD hacemos insert
+								BD.celdasInsert(st, fila, columna, celda.getTextoEdicion());
 							}
-						} else {
-							// La celda no tiene texto
-							BD.celdaDelete(st, fila, columna);
+							
+						}else {
+							//La celda no tiene texto
+							BD.deleteCelda(st, fila, columna);
 						}
+						
 					}
+						 
+					
+					
 				}
+				
 			}
-		});
-        
+        	
+        });
+    }
+    
+    private static void crearLog() {
+    	logger = Logger.getLogger(VentanaMiniExcel.class.getName());
+    	FileHandler fh;
+    	
+    	try {
+			fh = new FileHandler("Info.log.xml");
+			logger.addHandler(fh);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     
