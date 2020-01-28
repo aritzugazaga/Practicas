@@ -148,6 +148,27 @@ private static Exception lastError = null;  // InformaciÃ³n de Ãºltimo error
 		return items;
 	}
 	
+	public static boolean itemUpdate( Statement st, String name, int id, float timeperunit ) {
+		String sentSQL = "";
+		try {
+			// Secu se utiliza para escapar parametros extraÃ±os
+			// Comilla simple para strings
+			sentSQL = "update items set name= '" + secu(name) + "', timeperunit=" + timeperunit + " where id = " + id;
+			int val = st.executeUpdate( sentSQL );
+			log( Level.INFO, "BD añadida " + val + " fila\t" + sentSQL, null );
+			if (val!=1) {  // Se tiene que aÃƒÂ±adir 1 - error si no
+				log( Level.SEVERE, "Error en update de BD. Id debería ser único\t" + sentSQL, null );
+				return false;  
+			}
+			return true;
+		} catch (SQLException e) {
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
+			lastError = e;
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	// MÃ©todos privados
 
 	// Devuelve el string "securizado" para volcarlo en SQL:

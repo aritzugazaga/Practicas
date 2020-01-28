@@ -127,3 +127,181 @@
   </exception>
 </record>
 </log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-01-27T18:30:23.518756700Z</date>
+  <millis>1580149823518</millis>
+  <nanos>756700</nanos>
+  <sequence>0</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos database.db</message>
+</record>
+<record>
+  <date>2020-01-27T18:30:23.560645Z</date>
+  <millis>1580149823560</millis>
+  <nanos>645000</nanos>
+  <sequence>1</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2020-01-27T18:30:23.579328600Z</date>
+  <millis>1580149823579</millis>
+  <nanos>328600</nanos>
+  <sequence>2</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>BD añadida 1 fila	insert into items (id, name, timeperunit) values(1, 'a', 1.0)</message>
+</record>
+<record>
+  <date>2020-01-27T18:30:23.582591300Z</date>
+  <millis>1580149823582</millis>
+  <nanos>591300</nanos>
+  <sequence>3</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>SEVERE</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Error en BD	</message>
+  <exception>
+    <message>java.sql.SQLException: The prepared statement has been finalized</message>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>throwex</method>
+      <line>478</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>step</method>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>execute</method>
+      <line>842</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.CoreStatement</class>
+      <method>exec</method>
+      <line>80</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.jdbc3.JDBC3Statement</class>
+      <method>executeQuery</method>
+      <line>75</line>
+    </frame>
+    <frame>
+      <class>database.DBManager</class>
+      <method>loadItems</method>
+      <line>130</line>
+    </frame>
+    <frame>
+      <class>gui.MainWindow</class>
+      <method>main</method>
+      <line>218</line>
+    </frame>
+  </exception>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2020-01-27T18:41:46.877349200Z</date>
+  <millis>1580150506877</millis>
+  <nanos>349200</nanos>
+  <sequence>0</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos database.db</message>
+</record>
+<record>
+  <date>2020-01-27T18:41:46.919277500Z</date>
+  <millis>1580150506919</millis>
+  <nanos>277500</nanos>
+  <sequence>1</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Creada base de datos</message>
+</record>
+<record>
+  <date>2020-01-27T18:41:46.938206200Z</date>
+  <millis>1580150506938</millis>
+  <nanos>206200</nanos>
+  <sequence>2</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>INFO</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>BD añadida 1 fila	insert into items (id, name, timeperunit) values(1, 'a', 1.0)</message>
+</record>
+<record>
+  <date>2020-01-27T18:41:46.942177100Z</date>
+  <millis>1580150506942</millis>
+  <nanos>177100</nanos>
+  <sequence>3</sequence>
+  <logger>BD-server-ejemplocs</logger>
+  <level>SEVERE</level>
+  <class>database.DBManager</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Error en BD	</message>
+  <exception>
+    <message>java.sql.SQLException: The prepared statement has been finalized</message>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>throwex</method>
+      <line>478</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.NativeDB</class>
+      <method>step</method>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.DB</class>
+      <method>execute</method>
+      <line>842</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.core.CoreStatement</class>
+      <method>exec</method>
+      <line>80</line>
+    </frame>
+    <frame>
+      <class>org.sqlite.jdbc3.JDBC3Statement</class>
+      <method>executeQuery</method>
+      <line>75</line>
+    </frame>
+    <frame>
+      <class>database.DBManager</class>
+      <method>loadItems</method>
+      <line>130</line>
+    </frame>
+    <frame>
+      <class>gui.MainWindow</class>
+      <method>main</method>
+      <line>218</line>
+    </frame>
+  </exception>
+</record>
+</log>

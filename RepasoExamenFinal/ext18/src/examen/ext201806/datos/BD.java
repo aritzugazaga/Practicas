@@ -1,20 +1,17 @@
-package main;
+package examen.ext201806.datos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import orders.Item;
+import examen.ext201806.datos.BD;
 
-
-public class DBManager { // Como probar la clase en el main de la MainWindow (ord19)
+public class BD {
 private static Exception lastError = null;  // InformaciÃ³n de Ãºltimo error SQL ocurrido
 	
 	// Inicia conexión con la bas de datos
@@ -51,8 +48,8 @@ private static Exception lastError = null;  // InformaciÃ³n de Ãºltimo error
 		try {
 			Statement statement = con.createStatement();
 			statement.setQueryTimeout(30);  // poner timeout 30 msg
-			statement.executeUpdate("create table if not exists items " +
-				"(id integer, name string, timeperunit real)");
+			statement.executeUpdate("create table if not exists celdas " +
+				"(fila integer, columna integer, textoedicion string)");
 			log( Level.INFO, "Creada base de datos", null );
 			return statement;
 		} catch (SQLException e) {
@@ -68,7 +65,7 @@ private static Exception lastError = null;  // InformaciÃ³n de Ãºltimo error
 		try {
 			Statement statement = con.createStatement();
 			statement.setQueryTimeout(30);  // poner timeout 30 msg
-			statement.executeUpdate("drop table if exists items");
+			statement.executeUpdate("drop table if exists celdas");
 			log( Level.INFO, "Reiniciada base de datos", null );
 			return usarCrearTablasBD( con );
 		} catch (SQLException e) {
@@ -79,34 +76,38 @@ private static Exception lastError = null;  // InformaciÃ³n de Ãºltimo error
 		}
 	}
 	
-	// Cierra la bas de datos abierta
-	public static void cerrarBD( Connection con, Statement st ) {
+	public static boolean celdaUpdate( Statement st, int fila, int columna, String textoedicion ) {
+		String sentSQL = "";
 		try {
-			if (st!=null) st.close();
-			if (con!=null) con.close();
-			log( Level.INFO, "Cierre de base de datos", null );
+			// Secu se utiliza para escapar parametros extraÃ±os
+			// Comilla simple para strings
+			sentSQL = "update celdas set textoedicion= '" + secu(textoedicion) + 
+					"' where fila= " + fila + " and columna= " + columna;
+			int val = st.executeUpdate( sentSQL );
+			log( Level.INFO, "BD añadida " + val + " fila\t" + sentSQL, null );
+			if (val!=1) {  // Se tiene que aÃƒÂ±adir 1 - error si no
+				log( Level.SEVERE, "Error en update de BD. Id debería ser único\t" + sentSQL, null );
+				return false;  
+			}
+			return true;
 		} catch (SQLException e) {
+			log( Level.SEVERE, "Error en BD\t" + sentSQL, e );
 			lastError = e;
-			log( Level.SEVERE, "Error en cierre de base de datos", e );
 			e.printStackTrace();
+			return false;
 		}
 	}
 	
-	// Gestion de excepciones
-	public static Exception getLastError() {
-		return lastError;
-	}
-	
 	// Inserta datos en la BD
-	public static boolean itemInsert( Statement st, String name, int id, float timeperunit ) {
+	public static boolean celdaInsert( Statement st, int fila, int columna, String textoedicion ) {
 		String sentSQL = "";
 		try {
 			// Secu se utiliza para escapar parametros extraños
 			// Comilla simple para strings
-			sentSQL = "insert into items (id, name, timeperunit) values(" +
-					 id + ", " +
-					"'" + secu(name) + "', " +
-					timeperunit + ")";
+			sentSQL = "insert into celdas (fila, columna, textoedicion) values(" +
+					 fila + ", " +
+					columna + ", " +
+					"'" + textoedicion + "')";
 			int val = st.executeUpdate( sentSQL );
 			log( Level.INFO, "BD aÃ±adida " + val + " fila\t" + sentSQL, null );
 			if (val!=1) {  // Se tiene que aÃ±adir 1 - error si no
@@ -123,51 +124,26 @@ private static Exception lastError = null;  // InformaciÃ³n de Ãºltimo error
 	}
 	
 	// Carga los items que hay en la tabla
-	public static List<Item> loadItems(Statement st) {
-		List<Item> items = new ArrayList<>();
+	public static String selectCelda(Statement st, int fila, int columna) {
 		String sentSQL = "";
 		try {
 			ResultSet rs = st.executeQuery(sentSQL);
+			sentSQL = "select * from celdas where fila= " + fila + " and columna= " + columna;
 			// Iteramos sobre la tabla result set
 			// El metodo next() pasa a la siguiente fila, y devuelve true si hay más filas
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				String name = rs.getString("name");
-				float timePerUnit = rs.getFloat("timeperunit");
-				Item item = new Item(id, name, timePerUnit);
-				items.add(item);
-				log(Level.INFO,"Fila leida: " + item, null);
+			if (rs.next()) {
+				String texto = rs.getString("textoedicion");
+				return texto;
 			}
-			sentSQL = "select * from items";
+			rs.close();
 			log(Level.INFO, "BD consultada: " + sentSQL, null);
 		} catch (SQLException e) {
 			log(Level.SEVERE, "Error en BD\t" + sentSQL, e);
 			lastError = e;
 			e.printStackTrace();
 		}
+		return null;
 	}
-	
-	// Carga los items que hay en la tabla
-		public static String selectCelda(Statement st, int fila, int columna) {
-			String sentSQL = "";
-			try {
-				ResultSet rs = st.executeQuery(sentSQL);
-				sentSQL = "select * from celdas where fila= " + fila + " and columna= " + columna;
-				// Iteramos sobre la tabla result set
-				// El metodo next() pasa a la siguiente fila, y devuelve true si hay más filas
-				if (rs.next()) {
-					String texto = rs.getString("textoedicion");
-					return texto;
-				}
-				rs.close();
-				log(Level.INFO, "BD consultada: " + sentSQL, null);
-			} catch (SQLException e) {
-				log(Level.SEVERE, "Error en BD\t" + sentSQL, e);
-				lastError = e;
-				e.printStackTrace();
-			}
-			return null;
-		}
 	
 	// Borrar celda
 	public static boolean celdaDelete(Statement st,  int fila, int columna) {
@@ -185,6 +161,25 @@ private static Exception lastError = null;  // InformaciÃ³n de Ãºltimo error
 
 	}
 	
+	// Cierra la bas de datos abierta
+	public static void cerrarBD( Connection con, Statement st ) {
+		try {
+			if (st!=null) st.close();
+			if (con!=null) con.close();
+			log( Level.INFO, "Cierre de base de datos", null );
+		} catch (SQLException e) {
+			lastError = e;
+			log( Level.SEVERE, "Error en cierre de base de datos", e );
+			e.printStackTrace();
+		}
+	}
+		
+	// Gestion de excepciones
+	public static Exception getLastError() {
+		return lastError;
+	}
+		
+	
 	// MÃ©todos privados
 
 	// Devuelve el string "securizado" para volcarlo en SQL:
@@ -196,17 +191,17 @@ private static Exception lastError = null;  // InformaciÃ³n de Ãºltimo error
 		}
 		return ret.toString().replaceAll( "'", "''" );
 	}
-	
+		
 
 	// Logging
-	
+		
 	private static Logger logger = null;
 	// MÃ©todo pÃºblico para asignar un logger externo
 	/** Asigna un logger ya creado para que se haga log de las operaciones de base de datos
 	 * @param logger	Logger ya creado
 	 */
 	public static void setLogger( Logger logger ) {
-		DBManager.logger = logger;
+		BD.logger = logger;
 	}
 	// MÃ©todo local para loggear (si no se asigna un logger externo, se asigna uno local)
 	private static void log( Level level, String msg, Throwable excepcion ) {

@@ -3,6 +3,8 @@ package examen.ext201806.iu;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +61,8 @@ public class VentanaMiniExcel extends JFrame {
         botonera.add( bGuardar );
         JButton bCargar = new JButton( "Load" );
         botonera.add( bCargar );
+        JButton bGuardarBD = new JButton("GuardarBD");
+        botonera.add(bGuardarBD);
         verCelda = new JLabel( " " );
         botonera.add( verCelda );
         
@@ -147,7 +151,38 @@ public class VentanaMiniExcel extends JFrame {
 				logger.log(Level.INFO, fEntrada.getAbsolutePath() );
 			}
 		} );
+        bGuardarBD.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//Guardar tabla excell en la BDD
+				// Recorrer objeto datos
+				Connection conn = BD.initBD("celdas.bd");
+				Statement st = BD.usarCrearTablasBD(conn);
+				for (int fila = 0; fila < datos.getFilas(); fila++) {
+					for(int columna = 0; columna<datos.getColumnas(); columna++) {
+						ValorCelda celda = datos.get(fila, columna);
+						celda.getTextoEdicion();
+						// La celda tiene texto
+						if (celda != null && celda.getTextoEdicion() != null 
+								&& celda.getTextoEdicion().length()>0) {
+							// Si la celda existe en la BD hacemos update
+							if (BD.selectCelda(st, fila, columna) != null) {
+								BD.celdaUpdate(st, fila, columna, celda.getTextoEdicion());
+							} else {
+								// Si la celda no existe en la BD hacemos insert
+								BD.celdaInsert(st, fila, columna, celda.getTextoEdicion());
+							}
+						} else {
+							// La celda no tiene texto
+							BD.celdaDelete(st, fila, columna);
+						}
+					}
+				}
+			}
+		});
         
     }
+    
     
 }
