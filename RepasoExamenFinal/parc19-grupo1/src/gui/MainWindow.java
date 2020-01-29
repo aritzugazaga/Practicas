@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.sql.Connection;
 import java.util.List;
 
 import javax.swing.JFileChooser;
@@ -27,6 +28,8 @@ import javax.swing.event.ListSelectionListener;
 import analysis.AnalysisProgressCallback;
 import analysis.Document;
 import analysis.DocumentAnalyzer;
+import database.DBManager;
+import database.DBManagerException;
 import loader.DirectoryLoader;
 import loader.DirectoryLoaderException;
 
@@ -275,6 +278,14 @@ public class MainWindow extends JFrame implements AnalysisProgressCallback {
 	}
 	
 	private void saveDocuments(List<Document> documents) {
-		
+		DBManager db = new DBManager();
+		try {
+			db.connect();
+			db.createDocumentTable();
+			db.insertDocuments(documents);
+			db.disconnect();
+		} catch (DBManagerException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,6 @@ public class FileDocument implements Document{
 
 	@Override
 	public int getWords() {
-		// TODO Auto-generated method stub
 		return words;
 	}
 
@@ -60,57 +60,62 @@ public class FileDocument implements Document{
 	}
 
 	@Override
-	public void analyze(int minValue) throws DocumentAnalysisException {
+	public void analyze(int minValue) throws DocumentAnalysisException {	
 		Map<String, Integer> wordMap = new HashMap<>();
-		file = new File("data.txt");
-		FileReader fr;
-		try {
-			fr = new FileReader(file);
-			bf = new BufferedReader(fr);
+		try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
 			String line = null;
-			while ((line = bf.readLine()) != null) {
-				lines ++;
+			while((line = reader.readLine()) != null) {
+				lines++;
 				chars += line.length();
 				words += countWords(line, wordMap);
 			}
 			
 			analized = true;
 			
-			// Recorre el mapa de wordMap
 			for (Entry<String, Integer> entry : wordMap.entrySet()) {
 				if (entry.getValue() >= minValue) {
 					wordCount.add(new WordCount(entry.getKey(), entry.getValue()));
 				}
-				
 			}
 			
+			Collections.sort(wordCount, Collections.reverseOrder());
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new DocumentAnalysisException("Error reading data from file", e);
 		}
-		
 	}
 	
-	// Añade a wordCount nuevas palabras o suma en 1 al valor de esa palabra si ya existe
 	private int countWords(String line, Map<String, Integer> wordCount) {
 		int totalWords = 0;
-		StringTokenizer st = new StringTokenizer(line, " ");
-		while (st.hasMoreTokens()) {
-			String word = st.nextToken();
-			word = word.replaceAll("[.!?\\-]", "");
+		StringTokenizer stringTokenizer = new StringTokenizer(line);
+		while(stringTokenizer.hasMoreTokens()) {
+			String word = stringTokenizer.nextToken();
+			word = word.replaceAll("[.!?\\-]", "").toLowerCase();
 			if (wordCount.containsKey(word)) {
 				Integer value = wordCount.get(word);
 				wordCount.put(word, value + 1);
 			} else {
 				wordCount.put(word, 1);
 			}
-			totalWords ++;
+			totalWords += 1;
 		}
-		
 		return totalWords;
 	}
+	
 
 	public boolean isAnalized() {
 		return analized;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format(
+			"name=%s, path=%s, chars=%d, words=%d, lines=%d",
+			getName(),
+			getFile(),
+			getChars(),
+			getWords(),
+			getLines()
+		);
 	}
 
 }
