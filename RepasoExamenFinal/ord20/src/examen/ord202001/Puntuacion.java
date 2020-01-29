@@ -1,6 +1,6 @@
 package examen.ord202001;
 
-public class Puntuacion {
+public class Puntuacion implements Comparable<Puntuacion> {
 	private String nick;
 	private double t;
 	private int p;
@@ -34,6 +34,23 @@ public class Puntuacion {
 	@Override
 	public String toString() {
 		return "Puntuacion [nick=" + nick + ", t=" + t + ", p=" + p + "]";
+	}
+
+	@Override
+	public int compareTo(Puntuacion o) {
+		if (this.getP() > o.getP()) {
+			return -1;
+		} else if (this.getP() < o.getP()) {
+			return 1;
+		} else {
+			if (this.getT() > o.getT()) {
+				return -1;
+			} else if (this.getT() > o.getT()) {
+				return 1;
+			} else {
+				return this.getNick().compareTo(o.getNick());
+			}
+		}
 	}
 
 }

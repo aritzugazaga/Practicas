@@ -7,8 +7,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import javax.print.attribute.standard.DocumentName;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -29,6 +31,7 @@ import javax.swing.event.ListSelectionListener;
 import analysis.AnalysisProgressCallback;
 import analysis.Document;
 import analysis.DocumentAnalyzer;
+import analysis.DocumentNameComparator;
 import analysis.DocumentStatistics;
 import loader.DirectoryLoader;
 import loader.DirectoryLoaderException;
@@ -320,6 +323,16 @@ public class MainWindow extends JFrame implements AnalysisProgressCallback {
 	}
 	
 	private void orderListModel(Order order) {
-		
+		List<Document> loadedDocuments = new ArrayList<>(listModel.getDocuments());
+		if (order == Order.ASC) {
+			// Antes de hacer esto crear la clase DocumentNameComparator en analysis
+			// Cuando a la clase DocumentNameComparator le damos el valor false lo ordena ascendente
+			Collections.sort(loadedDocuments, new DocumentNameComparator(false));
+		} else {
+			// Cuando a la clase DocumentNameComparator le damos el valor true lo ordena descendente
+			Collections.sort(loadedDocuments, new DocumentNameComparator(true));
+		}
+		listModel.clear();
+		listModel.addAll(loadedDocuments);
 	}
 }

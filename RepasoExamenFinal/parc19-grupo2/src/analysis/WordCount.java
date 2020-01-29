@@ -5,7 +5,7 @@ package analysis;
  * @author Unai Aguilera <unai.aguilera@deusto.es>
  *
  */
-public class WordCount {
+public class WordCount implements Comparable<WordCount>{
 
 	private String word;
 	private Integer count;
@@ -39,5 +39,15 @@ public class WordCount {
 	@Override
 	public String toString() {
 		return String.format("word=%s, count=%s", word, count);
+	}
+
+	@Override
+	public int compareTo(WordCount o) {
+		if(this.count > o.getCount()) {
+			return 1;
+		} else if(this.count < o.getCount()){
+			return -1;
+		}
+		return this.word.compareTo(o.getWord());
 	}
 }
