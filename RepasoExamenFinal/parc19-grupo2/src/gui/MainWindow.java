@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.print.attribute.standard.DocumentName;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -29,10 +28,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import analysis.AnalysisProgressCallback;
+import analysis.CollectionStatistics;
 import analysis.Document;
 import analysis.DocumentAnalyzer;
 import analysis.DocumentNameComparator;
 import analysis.DocumentStatistics;
+import database.DBManager;
+import database.DBManagerException;
 import loader.DirectoryLoader;
 import loader.DirectoryLoaderException;
 
@@ -319,7 +321,22 @@ public class MainWindow extends JFrame implements AnalysisProgressCallback {
 	}
 	
 	private void saveDocuments() {
+		DBManager dbManager = new DBManager();
 		
+		try {
+			dbManager.connect();
+			
+			dbManager.createStatisticsTable();
+			
+			List<DocumentStatistics> documentStatistics = getStatistics();
+			CollectionStatistics collectionStatistics = new CollectionStatistics(documentStatistics);
+			// Se pone get(0) por que queremos saber la palabra mas usada, y esta ordenado de mayo a menor la lista
+			dbManager.insertStatistics(collectionStatistics.getAvgWords(), collectionStatistics.getTopWords().get(0));
+			
+			dbManager.disconnect();
+		} catch (DBManagerException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void orderListModel(Order order) {

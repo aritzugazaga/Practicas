@@ -42,7 +42,7 @@ private Connection conn;
 	}
 	
 	public void insertDocuments(List<Document> documents) throws DBManagerException {
-		String insertSQL = "INSERT INTO document VALUES(?, ?, ?, ?)";
+		String insertSQL = "insert into document values(?, ?, ?, ?)";
 		try (PreparedStatement stmt = conn.prepareStatement(insertSQL)) {
 			for (Document document : documents) {
 				stmt.setString(1, document.getName());
