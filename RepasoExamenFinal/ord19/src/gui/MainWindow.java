@@ -291,7 +291,6 @@ public class MainWindow extends JFrame {
 				new MainWindow();
 			}
 		});
-
 	}
 
 	private static void demoFicheros() {

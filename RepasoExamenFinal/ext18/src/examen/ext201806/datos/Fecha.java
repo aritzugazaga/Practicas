@@ -2,8 +2,8 @@ package examen.ext201806.datos;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
+@SuppressWarnings("serial")
 public class Fecha extends ValorCelda{
 	private String fecha;
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
