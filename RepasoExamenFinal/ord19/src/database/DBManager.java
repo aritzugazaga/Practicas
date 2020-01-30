@@ -127,6 +127,7 @@ private static Exception lastError = null;  // InformaciÃ³n de Ãºltimo error
 		List<Item> items = new ArrayList<>();
 		String sentSQL = "";
 		try {
+			sentSQL = "select * from items";
 			ResultSet rs = st.executeQuery(sentSQL);
 			// Iteramos sobre la tabla result set
 			// El metodo next() pasa a la siguiente fila, y devuelve true si hay más filas
@@ -138,7 +139,6 @@ private static Exception lastError = null;  // InformaciÃ³n de Ãºltimo error
 				items.add(item);
 				log(Level.INFO,"Fila leida: " + item, null);
 			}
-			sentSQL = "select * from items";
 			log(Level.INFO, "BD consultada: " + sentSQL, null);
 		} catch (SQLException e) {
 			log(Level.SEVERE, "Error en BD\t" + sentSQL, e);
