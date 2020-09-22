@@ -1,31 +1,5 @@
-INDEX VERSION 1.131+C:\Users\aritz\git\practicas\.metadata\.plugins\org.eclipse.jdt.core
-3271193799.index
-2975546740.index
-1905776881.index
-2633793141.index
-1110267805.index
-3612075282.index
-1759103101.index
-3277661260.index
-336292785.index
-1897228515.index
-2147503475.index
-2075935974.index
-3405282431.index
-2289067713.index
-3622422350.index
-3090562172.index
-1080156631.index
-3488235977.index
-3933804599.index
-812289624.index
-3012668867.index
-4087800634.index
-4253304401.index
-2956429183.index
-3358488682.index
-3555904243.index
-202973410.index
-4049738683.index
-2623232651.index
-2418592113.index
+INDEX VERSION 1.131+/Users/aritzugazaga/Documents/GitHub/ProgramacionIII/.metadata/.plugins/org.eclipse.jdt.core
+3314994792.index
+465359589.index
+2303663815.index
+1277319819.index
