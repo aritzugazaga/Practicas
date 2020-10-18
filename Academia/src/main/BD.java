@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import orders.Item;
 
 
-public class BD { // Como probar la clase en el main de la MainWindow (ord19)
+public class BD { // Como probar la clase en el main de la MainWindow (ord19) a
 private static Exception lastError = null;  // InformaciÃ³n de Ãºltimo error SQL ocurrido
 	
 	// Inicia conexión con la bas de datos
